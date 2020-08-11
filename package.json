@@ -4,7 +4,7 @@
   "description": "school app",
   "main": "index.js",
   "scripts": {
-    "test": "yarn test"
+    "start": "node ./bin/www"
   },
   "author": "",
   "license": "ISC",
