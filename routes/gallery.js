@@ -22,7 +22,7 @@ const upload = multer({
 router.post('/add-gallery-image', auth , upload.single('gallery_img') ,async(req,res)=>{
     try{
         const buffer = await sharp(req.file.buffer).toBuffer()
-        const data = new gallery({gallery_img:buffer , height_ration: req.body.height_ration , order: req.body.order})
+        const data = new gallery({gallery_img:buffer , width_ration: req.body.width_ration ,height_ration: req.body.height_ration , order: req.body.order})
 
         await data.save();
         res.status(200).send({
@@ -38,6 +38,22 @@ router.post('/add-gallery-image', auth , upload.single('gallery_img') ,async(req
 })
 
 router.get('/get-gallery-images', auth , async(req,res)=>{
+    
+    try{
+        const data = await gallery.find({});
+        res.status(200).send({
+            status:'success',
+            data:data
+        });
+    }catch(e){
+        res.status(400).send({
+            status:'Error',
+            Error: e
+        });
+    }
+})
+
+router.get('/website-get-gallery-images' , async(req,res)=>{
     
     try{
         const data = await gallery.find({});
@@ -70,7 +86,7 @@ router.get('/get-gallery-image/:id', auth , async(req,res)=>{
 })
 
 
-router.get('/get-gallery-image/:id/view' , async(req,res)=>{
+router.get('/website-get-gallery-image/:id/view' , async(req,res)=>{
     
     try{
         const id = req.params.id
@@ -96,6 +112,7 @@ router.put('/update-gallery-image/:id', auth , upload.single('gallery_img'), asy
             {
                 gallery_img:req.file.buffer,
                 height_ration: req.body.height_ration, 
+                width_ration: req.body.width_ration,
                 order: req.body.order
             },
             {new:true , runValidators:true , useFindAndModify:false}

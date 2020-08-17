@@ -52,6 +52,22 @@ router.get('/get-sliders', auth , async(req,res)=>{
         });
     }
 })
+
+router.get('/website-get-sliders' , async(req,res)=>{
+    
+    try{
+        const data = await slider.find({});
+        res.status(200).send({
+            status:'success',
+            data:data
+        });
+    }catch(e){
+        res.status(400).send({
+            status:'Error',
+            Error: e
+        });
+    }
+})
 router.get('/get-slider/:id', auth , async(req,res)=>{
     
     try{
@@ -71,6 +87,22 @@ router.get('/get-slider/:id', auth , async(req,res)=>{
 
 
 router.get('/get-slider-image/:id/view' , async(req,res)=>{
+    
+    try{
+        const id = req.params.id
+        const data = await slider.findById(id);
+        res.set('Content-type' , 'image/jpg');
+        res.send(data.slider_img);
+    }catch(e){
+        res.status(400).send({
+            status:'Error',
+            status:'Error',
+            Error: e
+        });
+    }
+})
+
+router.get('/website-get-slider-image/:id/view' , async(req,res)=>{
     
     try{
         const id = req.params.id

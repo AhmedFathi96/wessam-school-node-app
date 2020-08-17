@@ -59,6 +59,24 @@ router.get('/get-testimonials', auth , async(req,res)=>{
         });
     }
 })
+
+
+router.get('/website-get-testimonials' , async(req,res)=>{
+    
+    try{
+        const data = await testimonial.find({});
+        res.status(200).send({
+            status:'success',
+            data:data
+        });
+    }catch(e){
+        res.status(400).send({
+            status:'Error',
+            Error: e
+        });
+    }
+})
+
 router.get('/get-testimonial/:id', auth , async(req,res)=>{
     
     try{

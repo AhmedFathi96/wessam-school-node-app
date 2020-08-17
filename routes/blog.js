@@ -48,6 +48,22 @@ router.post('/add-blog-post', auth , upload.fields([{
     }
 })
 
+
+router.get('/website-get-blog-posts' , async(req,res)=>{
+    
+    try{
+        const data = await blog.find({});
+        res.status(200).send({
+            status:'success',
+            data:data
+        });
+    }catch(e){
+        res.status(400).send({
+            status:'Error',
+            Error: e
+        });
+    }
+})
 router.get('/get-blog-posts', auth , async(req,res)=>{
     
     try{

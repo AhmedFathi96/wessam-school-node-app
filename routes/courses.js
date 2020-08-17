@@ -1,12 +1,12 @@
 const express = require('express')
 const router  = express.Router();
-const contact   = require('../models/contact'); 
+const course   = require('../models/courses'); 
 const auth    = require('../middleware/auth')
 
-router.post('/create-contact', auth , async(req,res)=>{
+router.post('/create-course', auth , async(req,res)=>{
     
     try{
-        const data = new contact(req.body);
+        const data = new course(req.body);
         console.log(data,req.body);
         await data.save();
         res.status(200).send({
@@ -21,28 +21,10 @@ router.post('/create-contact', auth , async(req,res)=>{
     }
 })
 
-router.post('/website-create-contact' , async(req,res)=>{
+router.get('/get-courses', auth , async(req,res)=>{
     
     try{
-        const data = new contact(req.body);
-        console.log(data,req.body);
-        await data.save();
-        res.status(200).send({
-            status:'success',
-            data:req.body
-        });
-    }catch(e){
-        res.status(400).send({
-            status:'Error',
-            Error: e
-        });
-    }
-})
-
-router.get('/get-contacts', auth , async(req,res)=>{
-    
-    try{
-        const data = await contact.find({});
+        const data = await course.find({});
         res.status(200).send({
             status:'success',
             data:data
@@ -54,11 +36,27 @@ router.get('/get-contacts', auth , async(req,res)=>{
         });
     }
 })
-router.get('/get-contact/:id', auth , async(req,res)=>{
+
+router.get('/website-get-courses' , async(req,res)=>{
+    
+    try{
+        const data = await course.find({});
+        res.status(200).send({
+            status:'success',
+            data:data
+        });
+    }catch(e){
+        res.status(400).send({
+            status:'Error',
+            Error: e
+        });
+    }
+})
+router.get('/get-course/:id', auth , async(req,res)=>{
     
     try{
         const id = req.params.id
-        const data = await contact.findById(id);
+        const data = await course.findById(id);
         res.status(200).send({
             status:'success',
             data:data
@@ -71,16 +69,40 @@ router.get('/get-contact/:id', auth , async(req,res)=>{
     }
 })
 
-router.delete('/delete-contact/:id',auth , async(req,res)=>{
+
+router.put('/update-course/:id', auth , async (req,res)=>{
+    try{
+        const id = req.params.id;
+        const data = await course.findByIdAndUpdate(id, req.body ,{new:true , runValidators:true , useFindAndModify:false})
+        if(!data){
+            return res.status(400).send({
+                status:'Error',
+                Error: 'Something wrong'
+            })
+        }
+        res.status(200).send({
+            status: 'success',
+            data: data
+        })
+
+    }catch(e){
+        res.status(400).send({
+            status:'Error',
+            Error: e
+        });
+    }
+
+})
+router.delete('/delete-course/:id',auth , async(req,res)=>{
     
     try{
         const id = req.params.id
         console.log('id==>' , id)
-        const data = await contact.findByIdAndDelete(id);
+        const data = await course.findByIdAndDelete(id);
         if(!data){
             res.status(400).send({
                 status:'Error',
-                Error: 'can\'t find that contact'
+                Error: 'can\'t find that course'
             });
         }
         res.status(200).send({

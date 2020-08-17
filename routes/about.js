@@ -59,7 +59,37 @@ router.get('/get-about', auth , async(req,res)=>{
     }
 })
 
+router.get('/website-get-about' , async(req,res)=>{
+    
+    try{
+        const data = await about.find({});
+        res.status(200).send({
+            status:'success',
+            data:data
+        });
+    }catch(e){
+        res.status(400).send({
+            status:'Error',
+            Error: e
+        });
+    }
+})
 
+router.get('/website-get-about-image/:id/view' , async(req,res)=>{
+    
+    try{
+        const id = req.params.id
+        const data = await about.findById(id);
+        res.set('Content-type' , 'image/jpg');
+        res.send(data.about_img);
+    }catch(e){
+        res.status(400).send({
+            status:'Error',
+            status:'Error',
+            Error: e
+        });
+    }
+})
 
 router.get('/get-about-image/:id/view' , async(req,res)=>{
     

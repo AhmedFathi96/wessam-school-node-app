@@ -10,6 +10,10 @@ const gallery = mongoose.Schema({
         type: Number,
         required: true
     },
+    width_ration:{
+        type: Number,
+        required: true
+    },
     order:{
         type: Number,
         required: true
