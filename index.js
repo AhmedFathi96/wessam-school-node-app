@@ -49,7 +49,11 @@ const galleryRouter     = require('./routes/gallery');
 const testimonialRouter = require('./routes/testimonial');
 const blogRouter        = require('./routes/blog');
 const contactRouter     = require('./routes/contact');
-const courseRouter     = require('./routes/courses');
+const courseRouter      = require('./routes/courses');
+const pagesRouter       = require('./routes/pages');
+const infoRouter       = require('./routes/info');
+
+ 
 
 
 
@@ -71,6 +75,11 @@ app.use('/api/testimonial', testimonialRouter)
 app.use('/api/blog', blogRouter)
 app.use('/api/contact', contactRouter)
 app.use('/api/courses', courseRouter)
+app.use('/api/pages', pagesRouter)
+app.use('/api/info', infoRouter)
+
+
+
 
 
 
