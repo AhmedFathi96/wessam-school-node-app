@@ -102,6 +102,23 @@ router.get('/website-get-gallery-image/:id/view' , async(req,res)=>{
     }
 })
 
+
+router.get('/get-gallery-image/:id/view' , async(req,res)=>{
+    
+    try{
+        const id = req.params.id
+        const data = await gallery.findById(id);
+        res.set('Content-type' , 'image/jpg');
+        res.send(data.gallery_img);
+    }catch(e){
+        res.status(400).send({
+            status:'Error',
+            status:'Error',
+            Error: e
+        });
+    }
+})
+
 router.put('/update-gallery-image/:id', auth , upload.single('gallery_img'), async (req,res)=>{
     try{
         const id = req.params.id;
