@@ -21,6 +21,25 @@ router.post('/create-student', auth , async(req,res)=>{
     }
 })
 
+
+router.post('/website-create-student' , async(req,res)=>{
+    
+    try{
+        const data = new student(req.body);
+        console.log(data,req.body);
+        await data.save();
+        res.status(200).send({
+            status:'success',
+            data:req.body
+        });
+    }catch(e){
+        res.status(400).send({
+            status:'Error',
+            Error: e
+        });
+    }
+})
+
 router.get('/get-students', auth , async(req,res)=>{
     
     try{

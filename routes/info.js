@@ -36,7 +36,7 @@ router.get('/get-info', auth , async(req,res)=>{
         });
     }
 })
-router.get('/website-get-info/' , async(req,res)=>{
+router.get('/website-get-info' , async(req,res)=>{
     
     try{
         const data = await info.find({});
