@@ -20,24 +20,6 @@ router.post('/create-admin', auth , async(req,res)=>{
     }
 })
 
-router.post('/create-admin1' , async(req,res)=>{
-    
-    try{
-        const data = new admin(req.body);
-        console.log(data,req.body);
-        await data.save();
-        res.status(200).send({
-            status:'success',
-            data:req.body
-        });
-    }catch(e){
-        res.status(400).send({
-            status:'Error',
-            Error: e
-        });
-    }
-})
-
 router.get('/get-admins', auth , async(req,res)=>{
     
     try{
